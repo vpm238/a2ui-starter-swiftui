@@ -2,9 +2,7 @@
 
 **Reference client-side [A2UI](https://a2ui.org/) starter app.** SwiftUI, macOS/iOS, Claude-powered, no server.
 
-Built on [`a2ui-swiftui`](https://github.com/vpm238/a2ui-swiftui) (renderer) + [`a2ui-skills-swiftui`](https://github.com/vpm238/a2ui-skills-swiftui) (client-side skill runtime). One `swift run` away from a working multi-turn agent that streams Claude's output into progressively-rendering A2UI surfaces, with all three [progressive-rendering RFC](https://github.com/vpm238/a2ui-progressive-rendering-rfc-rfc) primitives implemented end-to-end.
-
-![Architecture](./docs/architecture.png) <!-- add after first real screenshot -->
+Built on [`a2ui-swiftui`](https://github.com/vpm238/a2ui-swiftui) (renderer) + [`a2ui-skills-swiftui`](https://github.com/vpm238/a2ui-skills-swiftui) (client-side skill runtime). One `swift run` away from a working multi-turn agent that streams Claude's output into progressively-rendering A2UI surfaces, with all three [progressive-rendering RFC](https://github.com/vpm238/a2ui-progressive-rendering-rfc) primitives implemented end-to-end.
 
 ## What this demonstrates
 
@@ -50,7 +48,7 @@ A native macOS window opens with the greeting surface. Tap any option to see the
 
 **Zero backend.** Skills are bundled as Swift strings. Events route locally in the runtime. LLM calls go from the client to Anthropic directly over HTTPS/SSE.
 
-For production, wrap the API key with a thin proxy (point `ProxyLLMProvider` at it) so the key isn't on the device.
+For production, wrap the API key with a thin proxy (conform any type to `LLMProvider` and point it at your proxy endpoint) so the key isn't on the device. The [web starter](https://github.com/vpm238/a2ui-starter-web) ships a Cloudflare Worker proxy you can adapt.
 
 ## Project structure
 
@@ -71,21 +69,6 @@ Experimental proposal — **no host reads it yet.** It's here as a concrete draf
 
 See [`skill.manifest.json`](./skill.manifest.json) in this repo for the proposed shape.
 
-## What's in v0.1 (this release)
-
-- ✅ Four working skills: `greeting`, `planner`, `decider`, `critic`
-- ✅ SwiftUI renderer with all 6 built-in A2UI components
-- ✅ Streaming skeleton-first UI (RFC Proposals 1, 2, 3 end-to-end)
-- ✅ Client-side Anthropic SDK via SSE
-- ✅ Inline SKILL.md authoring
-
-## What's in v0.2 (planned)
-
-- `a2ui-starter-web` — Lit + tiny proxy server, same architecture for browser
-- `a2ui-starter-flutter` — same architecture for Android/iOS via Flutter (blocked on SDK install currently)
-- File-based skill loading (`Skill.bundled(...)`) alongside the inline pattern
-- `ProxyLLMProvider` shipped with a sample Node/Python LLM proxy server
-
 ## Dependencies
 
 - [`a2ui-swiftui`](https://github.com/vpm238/a2ui-swiftui) — SwiftUI A2UI renderer
@@ -101,4 +84,4 @@ MIT. See [LICENSE](LICENSE).
 
 - [`a2ui-swiftui`](https://github.com/vpm238/a2ui-swiftui) — renderer library used here
 - [`a2ui-skills-swiftui`](https://github.com/vpm238/a2ui-skills-swiftui) — skill runtime used here
-- [`a2ui-progressive-rendering-rfc`](https://github.com/vpm238/a2ui-progressive-rendering-rfc-rfc) — RFC and live demo for the streaming primitives this starter implements
+- [`a2ui-progressive-rendering-rfc`](https://github.com/vpm238/a2ui-progressive-rendering-rfc) — RFC and live demo for the streaming primitives this starter implements
