@@ -1,0 +1,37 @@
+{
+  "$schema": "https://a2ui.org/schemas/host-manifest.draft.json",
+  "name": "a2ui-starter-swiftui",
+  "version": "0.1.0",
+  "description": "Reference client-side A2UI host built in SwiftUI. Claude-powered via direct Anthropic SDK calls (no server). Demonstrates the skeleton-first streaming pattern with progressive-rendering RFC primitives 1-3.",
+  "protocol": "a2ui/0.9",
+  "host_type": "client",
+  "provides": {
+    "renderers": [
+      { "platform": "swiftui", "package": "github.com/vpm238/a2ui-swiftui", "version": ">=0.1.0" }
+    ],
+    "catalogs": [
+      { "id": "a2ui/core@0.1", "components": ["Text", "Button", "Column", "Card", "OptionsGrid", "RichMessageCard"] }
+    ]
+  },
+  "requires": {
+    "protocol": ">=0.9",
+    "rfc_extensions": ["progressive-rendering/proposal-1", "progressive-rendering/proposal-2", "progressive-rendering/proposal-3"]
+  },
+  "bundled_skills": [
+    { "id": "greeting", "triggers": [], "description": "Static intake — no LLM call." },
+    { "id": "planner",  "triggers": ["want_plan"],     "description": "Break a goal into 3 concrete first steps." },
+    { "id": "decider",  "triggers": ["want_decision"], "description": "Weigh two options. Take a position." },
+    { "id": "critic",   "triggers": ["want_feedback"], "description": "One strong opinionated piece of feedback." }
+  ],
+  "llm": {
+    "providers": [
+      { "id": "anthropic", "model": "claude-sonnet-4-5", "api_key_env": "ANTHROPIC_API_KEY" }
+    ],
+    "streaming": true,
+    "field_output_format": "xml-tags"
+  },
+  "notes": [
+    "Manifest shape is an experimental proposal; no host reads it today.",
+    "Intended to standardize how skill hosts declare capabilities, bundled skills, and LLM backends."
+  ]
+}
